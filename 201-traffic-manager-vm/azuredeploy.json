@@ -59,7 +59,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(variables('publicIPAddressName'), copyIndex())]",
       "copy": {
@@ -75,7 +75,7 @@
       }
     },
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[resourceGroup().location]",
@@ -96,7 +96,7 @@
       }
     },
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nicName'), copyIndex())]",
       "copy": {
@@ -173,7 +173,7 @@
         "name": "extLoop",
         "count": "[variables('numVMs')]"
       },
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), copyIndex())]"
@@ -189,7 +189,7 @@
       }
     },
     {
-      "apiVersion": "2015-11-01",
+      "apiVersion": "[variables('tmApiVersion')]",
       "type": "Microsoft.Network/trafficManagerProfiles",
       "name": "VMEndpointExample",
       "location": "global",
@@ -206,7 +206,7 @@
           "ttl": 30
         },
         "monitorConfig": {
-          "protocol": "HTTP",
+          "protocol": "http",
           "port": 80,
           "path": "/"
         },

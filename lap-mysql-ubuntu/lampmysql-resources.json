@@ -23,7 +23,7 @@
     "vmSize": {
       "type": "string"
     },
-    "mysqlstaticIp": {
+	"mysqlstaticIp": {
       "type": "string"
     },
     "subnet": {
@@ -31,22 +31,44 @@
     }
   },
   "variables": {
+<<<<<<< HEAD
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('subnet').vnet, parameters('subnet').name)]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'standardsa')]",
     "availabilitySetName": "[concat(parameters('namespace'), 'set')]",
     "nicName": "[concat(parameters('namespace'), concat(parameters('vmbasename'), 'nic'))]",
     "vmName": "[concat(parameters('namespace'), parameters('vmbasename'), 'vm')]"
+||||||| 137cb18... Correcting api version
+    "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
+    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'standardsa')]",
+    "apiVersion": "2015-06-15"
+=======
+    "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
+	"storageAccountName": "[concat(uniquestring(resourceGroup().id), 'standardsa')]",
+	"apiVersion": "2015-06-15"
+>>>>>>> parent of 137cb18... Correcting api version
   },
   "resources": [
     {
+<<<<<<< HEAD
       "apiVersion": "2017-12-01",
+||||||| 137cb18... Correcting api version
+      "apiVersion": "2015-06-15",
+=======
+      "apiVersion": "[variables('apiVersion')]",
+>>>>>>> parent of 137cb18... Correcting api version
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetName')]",
       "location": "[resourceGroup().location]",
-      "properties": {}
+      "properties": { }
     },
     {
+<<<<<<< HEAD
       "apiVersion": "2017-10-01",
+||||||| 137cb18... Correcting api version
+      "apiVersion": "2015-06-15",
+=======
+      "apiVersion": "[variables('apiVersion')]",
+>>>>>>> parent of 137cb18... Correcting api version
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
       "location": "[resourceGroup().location]",
@@ -66,7 +88,13 @@
       }
     },
     {
+<<<<<<< HEAD
       "apiVersion": "2017-12-01",
+||||||| 137cb18... Correcting api version
+      "apiVersion": "2015-06-15",
+=======
+      "apiVersion": "[variables('apiVersion')]",
+>>>>>>> parent of 137cb18... Correcting api version
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
@@ -115,16 +143,24 @@
     {
       "apiVersion": "2017-12-01",
       "type": "Microsoft.Compute/virtualMachines/extensions",
+<<<<<<< HEAD
       "name": "[concat(variables('vmName'), '/lampInstall')]",
+||||||| 137cb18... Correcting api version
+      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'vm', '/lampInstall')]",
+      "apiVersion": "2015-06-15",
+=======
+      "name": "[concat(parameters('namespace'), parameters('vmbasename'), 'vm', '/lampInstall')]",
+      "apiVersion": "[variables('apiVersion')]",
+>>>>>>> parent of 137cb18... Correcting api version
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[variables('vmName')]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": true,
+		"type": "CustomScript",
+		"typeHandlerVersion": "2.0",
+		"autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": "[parameters('osSettings').scripts]",
           "commandToExecute": "[concat('bash install-mysql.sh ', parameters('lapNode'))]"

@@ -172,10 +172,10 @@
             "winRM": {
               "listeners": [
                 {
-                  "protocol": "Http"
+                  "protocol": "http"
                 },
                 {
-                  "protocol": "Https",
+                  "protocol": "https",
                   "certificateUrl": "[parameters('certificateUrl')]"
                 }
               ]

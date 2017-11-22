@@ -24,7 +24,7 @@
       "metadata": {
         "description": "The type of the operating system you want to deploy."
       }
-    },
+    },    
     "dbtype": {
       "type": "string",
       "allowedValues": [
@@ -113,7 +113,7 @@
         "OSType": "Windows",
         "Plan": {},
         "UsePlan": false
-      },
+      },     
       "Windows Server 2016 Datacenter": {
         "sku": "2016-Datacenter",
         "offer": "WindowsServer",
@@ -414,6 +414,7 @@
     "sidlower": "[toLower(parameters('sapSystemId'))]",
     "vmName": "[variables('sidlower')]",
     "storageAccountName": "[concat(variables('sidlower'), uniqueString(variables('sidlower'), resourceGroup().id))]",
+    
     "publicIpNameDB": "[concat(variables('sidlower'), '-pip-db')]",
     "vnetName": "[concat(variables('sidlower'), '-vnet')]",
     "publicIPAddressType": "Dynamic",
@@ -425,6 +426,7 @@
       "existing": "[parameters('subnetId')]"
     },
     "selectedSubnetId": "[variables('subnets')[parameters('newOrExistingSubnet')]]",
+
     "nestedDeploymentName": "nestedTemplate",
     "nestedDeploymentNameVNet": "[concat(variables('nestedDeploymentName'), 'vnet')]",
     "nestedDeploymentNameLBDB": "[concat(variables('nestedDeploymentName'), 'lbdb')]",
@@ -432,7 +434,7 @@
     "nestedDeploymentNameProf": "[concat(variables('nestedDeploymentName'), 'prof')]",
     "nestedDeploymentNameNIC": "[concat(variables('nestedDeploymentName'), 'nic')]",
     "nestedDeploymentNameNICDB": "[concat(variables('nestedDeploymentNameNIC'), 'db')]",
-    "nestedDeploymentNamePIP": "[concat(variables('nestedDeploymentNameNIC'), 'pip')]",
+    "nestedDeploymentNamePIP": "[concat(variables('nestedDeploymentNameNIC'), 'pip')]",    
     "nestedDeploymentNameNSG": "[concat(variables('nestedDeploymentNameDB'), 'nsg')]",
     "nsgNameDB": "[concat(variables('sidlower'), '-nsg')]",
     "avSetNameDB": "[concat(variables('sidlower'), '-avset-db')]",
@@ -447,7 +449,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[variables('nestedDeploymentNameNSG')]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -467,7 +469,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[variables('nestedDeploymentNameVnet')]",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
@@ -501,7 +503,7 @@
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('avSetNameDB')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVerion')]",
       "location": "[resourceGroup().location]",
       "properties": {
         "platformFaultDomainCount": 3,
@@ -509,7 +511,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[concat(variables('nestedDeploymentNamePIP'), '-', copyIndex())]",
       "type": "Microsoft.Resources/deployments",
       "copy": {
@@ -535,7 +537,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[concat(variables('storageAccountNameDB'), copyIndex())]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVerion')]",
       "location": "[resourceGroup().location]",
       "copy": {
         "name": "storageAccountDBLoop",
@@ -546,7 +548,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[variables('nestedDeploymentNameLBDB')]",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
@@ -584,7 +586,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[concat(variables('nestedDeploymentNameNICDB'), '-', copyIndex())]",
       "type": "Microsoft.Resources/deployments",
       "copy": {
@@ -622,7 +624,7 @@
     {
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nicNameDB'), '-', copyIndex())]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVerion')]",
       "copy": {
         "name": "nicDBLoop",
         "count": "[variables('dbvmCount')]"
@@ -649,7 +651,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[concat(variables('nestedDeploymentNameProf'), '-db-', copyIndex())]",
       "type": "Microsoft.Resources/deployments",
       "copy": {
@@ -706,7 +708,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[concat(variables('nestedDeploymentNameDB'), '-', copyIndex())]",
       "type": "Microsoft.Resources/deployments",
       "copy": {

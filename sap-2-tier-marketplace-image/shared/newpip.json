@@ -23,7 +23,7 @@
     {
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[parameters('publicIpName')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVerion')]",
       "location": "[resourceGroup().location]",
       "properties": {
         "publicIPAllocationMethod": "[parameters('publicIPAddressType')]"

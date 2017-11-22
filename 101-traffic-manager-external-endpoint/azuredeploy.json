@@ -14,7 +14,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-11-01",
+      "apiVersion": "[variables('tmApiVersion')]",
       "type": "Microsoft.Network/trafficManagerProfiles",
       "name": "ExternalEndpointExample",
       "location": "global",
@@ -26,7 +26,7 @@
           "ttl": 30
         },
         "monitorConfig": {
-          "protocol": "HTTP",
+          "protocol": "http",
           "port": 80,
           "path": "/"
         },

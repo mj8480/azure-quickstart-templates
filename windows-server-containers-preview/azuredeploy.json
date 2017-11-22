@@ -2,30 +2,35 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+
     "VMName": {
       "type": "string",
       "metadata": {
         "description": "This name will also be used to prefix the network security group, storage, virtual network, network card, subnet and public IP address name."
       }
     },
+
     "adminUsername": {
       "type": "string",
       "metadata": {
         "description": "Username for the Virtual Machine."
       }
     },
+
     "adminPassword": {
       "type": "securestring",
       "metadata": {
         "description": "Password for the Virtual Machine."
       }
     },
+
     "dnsNameForPublicIP": {
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
+
     "vmSize": {
       "type": "string",
       "defaultValue": "Standard_D1",
@@ -34,6 +39,7 @@
       }
     }
   },
+
   "variables": {
     "storageAccountName": "[concat(uniquestring(resourceGroup().id),'storage')]",
     "windowsOSVersion": "Windows-Server-Technical-Preview",
@@ -55,10 +61,11 @@
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
   },
   "resources": [
+
     {
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[variables('networkSecurityGroupName')]",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
@@ -76,6 +83,7 @@
               "direction": "Inbound"
             }
           },
+
           {
             "name": "RDP",
             "properties": {
@@ -90,6 +98,7 @@
               "direction": "Inbound"
             }
           },
+
           {
             "name": "Docker",
             "properties": {
@@ -104,13 +113,15 @@
               "direction": "Inbound"
             }
           }
+
         ]
       }
     },
+
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "StorageAccount"
@@ -119,8 +130,9 @@
         "accountType": "[variables('storageAccountType')]"
       }
     },
+
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
       "location": "[resourceGroup().location]",
@@ -134,8 +146,9 @@
         }
       }
     },
+
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[resourceGroup().location]",
@@ -164,8 +177,9 @@
         ]
       }
     },
+
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
       "location": "[resourceGroup().location]",
@@ -193,8 +207,9 @@
         ]
       }
     },
+
     {
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('VMName')]",
       "location": "[resourceGroup().location]",

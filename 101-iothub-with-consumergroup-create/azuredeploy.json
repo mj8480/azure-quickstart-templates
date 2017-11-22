@@ -100,7 +100,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2016-02-03",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[variables('location')]",
       "name": "[parameters('iotHubName')]",
       "properties": {
@@ -128,7 +128,7 @@
       "type": "Microsoft.Devices/iotHubs"
     },
     {
-      "apiVersion": "2016-02-03",
+      "apiVersion": "[variables('apiVersion')]",
       "dependsOn": [
         "[concat('Microsoft.Devices/iothubs/', parameters('iotHubName'))]"
       ],

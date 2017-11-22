@@ -65,13 +65,13 @@
   "resources": [
     {
       "comments": "Network Interface Resource",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[parameters('networkApiVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[parameters('networkInterfaceName')]",
       "location": "[parameters('location')]",
       "tags": {
         "[parameters('tag').key1]": "[parameters('tag').value1]",
-        "quickstartName": "[parameters('quickstartTags').name]",
+        "quickstartName": "[parameters('quickstartTags').name]",        
         "provider": "[parameters('informaticaTags').provider]"
       },
       "properties": {

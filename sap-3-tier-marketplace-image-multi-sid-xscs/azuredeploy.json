@@ -316,7 +316,7 @@
           }
         ]
       },
-      "9": {
+      "9":{
         "Size": "Large",
         "Disks": [
           {
@@ -416,7 +416,7 @@
         }
       }
     },
-    "xscsvmSize": "[variables('vmSizes')[ variables('systemCountSizes')[string(parameters('sapSystemCount'))].Size ] [parameters('systemAvailability')].xscsserversize]",
+    "xscsvmSize": "[variables('vmSizes')[ variables('systemCountSizes')[string(parameters('sapSystemCount'))].Size ] [parameters('systemAvailability')].xscsserversize]",    
     "xscsvmCount": "[variables('vmSizes')[ variables('systemCountSizes')[string(parameters('sapSystemCount'))].Size ] [parameters('systemAvailability')].xscsservercount]",
     "xscsvmDataDisks": "[variables('systemCountSizes')[string(parameters('sapSystemCount'))].Disks]",
     "sidlower": "[toLower(parameters('resourcePrefix'))]",
@@ -455,7 +455,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[variables('nestedDeploymentNameNSG')]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -475,7 +475,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[variables('nestedDeploymentNameVnet')]",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
@@ -509,7 +509,7 @@
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('avSetNameXSCS')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVerion')]",
       "location": "[resourceGroup().location]",
       "properties": {
         "platformFaultDomainCount": 3,
@@ -517,7 +517,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[concat(variables('nestedDeploymentNamePIP'), '-', copyIndex())]",
       "type": "Microsoft.Resources/deployments",
       "copy": {
@@ -543,7 +543,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[concat(variables('storageAccountNameXSCS'), copyIndex())]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVerion')]",
       "copy": {
         "name": "storageAccountXSCSLoop",
         "count": "[variables('xscsvmCount')]"
@@ -554,7 +554,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[variables('nestedDeploymentNameLBXSCS')]",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
@@ -595,7 +595,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[concat(variables('nestedDeploymentNameNICXSCS'), '-', copyIndex())]",
       "type": "Microsoft.Resources/deployments",
       "copy": {
@@ -633,7 +633,7 @@
     {
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nicNameXSCS'), '-', copyIndex())]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVerion')]",
       "copy": {
         "name": "nicXSCSLoop",
         "count": "[variables('xscsvmCount')]"
@@ -660,7 +660,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[concat(variables('nestedDeploymentNameProf'), '-xscs-', copyIndex())]",
       "type": "Microsoft.Resources/deployments",
       "copy": {
@@ -717,7 +717,7 @@
       }
     },
     {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "[variables('apiVerionRm')]",
       "name": "[concat(variables('nestedDeploymentNameXSCS'), '-', copyIndex())]",
       "type": "Microsoft.Resources/deployments",
       "copy": {

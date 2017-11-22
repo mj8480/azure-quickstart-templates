@@ -65,10 +65,10 @@
     "primaryLocation": {
       "type": "string",
       "allowedValues": [
-        "North Europe",
-        "West Europe",
-        "East US",
-        "West US"
+          "North Europe",
+          "West Europe",
+          "East US",
+          "West US"
       ],
       "metadata": {
         "description": "The primary location to provision resources for Bosh and CF"
@@ -77,10 +77,10 @@
     "secondaryLocation": {
       "type": "string",
       "allowedValues": [
-        "North Europe",
-        "West Europe",
-        "East US",
-        "West US"
+          "North Europe",
+          "West Europe",
+          "East US",
+          "West US"
       ],
       "metadata": {
         "description": "The secondary location to provision resources for Bosh and CF"
@@ -190,6 +190,7 @@
       "[uri(variables('baseUriAzureChinaCloud'), 'cf-cli/cf.deb')]"
     ],
     "filesToDownload": "[variables(concat('filesToDownload', parameters('environment')))]",
+
     "environmentAzureCloud": {
       "serviceHostBase": "core.windows.net",
       "boshReleaseUrl": "https://bosh.io/d/github.com/cloudfoundry/bosh?v=256.2",
@@ -213,11 +214,12 @@
       "cfReleaseUrl": "[uri(variables('baseUriAzureChinaCloud'), 'releases/cf-release-231.tgz')]"
     },
     "environment": "[variables(concat('environment', parameters('environment')))]",
+
     "keepUnreachableVMs": "false"
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[variables('boshNetworkSecurityGroup')]",
       "location": "[parameters('primaryLocation')]",
@@ -283,7 +285,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[variables('devboxNetworkSecurityGroup')]",
       "location": "[parameters('primaryLocation')]",
@@ -307,7 +309,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[variables('primaryCfNetworkSecurityGroup')]",
       "location": "[parameters('primaryLocation')]",
@@ -345,7 +347,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[variables('secondaryCfNetworkSecurityGroup')]",
       "location": "[parameters('secondaryLocation')]",
@@ -385,7 +387,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('primaryStorageAccountName')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[parameters('primaryLocation')]",
       "properties": {
         "accountType": "[variables('storageAccountType')]"
@@ -394,7 +396,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('defaultprimaryStorageAccountName')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[parameters('primaryLocation')]",
       "properties": {
         "accountType": "[variables('defaultstorageAccountType')]"
@@ -403,7 +405,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('secondaryStorageAccountName')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[parameters('secondaryLocation')]",
       "properties": {
         "accountType": "[variables('storageAccountType')]"
@@ -412,14 +414,14 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('defaultsecondaryStorageAccountName')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[parameters('secondaryLocation')]",
       "properties": {
         "accountType": "[variables('defaultstorageAccountType')]"
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(parameters('vmName'),'-devbox')]",
       "location": "[parameters('primaryLocation')]",
@@ -431,7 +433,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(parameters('vmName'),'-bosh')]",
       "location": "[parameters('primaryLocation')]",
@@ -440,7 +442,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(parameters('vmName'), '-cf-primary')]",
       "location": "[parameters('primaryLocation')]",
@@ -449,7 +451,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(parameters('vmName'), '-cf-secondary')]",
       "location": "[parameters('secondaryLocation')]",
@@ -458,7 +460,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('primaryVpnGatewayPublicIPName')]",
       "location": "[parameters('primaryLocation')]",
@@ -467,7 +469,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('secondaryVpnGatewayPublicIPName')]",
       "location": "[parameters('secondaryLocation')]",
@@ -476,7 +478,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('primaryVirtualNetworkName')]",
       "location": "[parameters('primaryLocation')]",
@@ -515,7 +517,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('secondaryVirtualNetworkName')]",
       "location": "[parameters('secondaryLocation')]",
@@ -548,7 +550,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('primaryNicName')]",
       "location": "[parameters('primaryLocation')]",
@@ -579,115 +581,115 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworkGateways",
       "name": "[variables('primaryVpnGatewayName')]",
       "location": "[parameters('primaryLocation')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('primaryVpnGatewayPublicIPName'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', variables('primaryVirtualNetworkName'))]"
+          "[concat('Microsoft.Network/publicIPAddresses/', variables('primaryVpnGatewayPublicIPName'))]",
+          "[concat('Microsoft.Network/virtualNetworks/', variables('primaryVirtualNetworkName'))]"
       ],
       "properties": {
-        "ipConfigurations": [
-          {
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[variables('primarySubnetGatewayRef')]"
-              },
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('primaryVpnGatewayPublicIPName'))]"
+          "ipConfigurations": [
+              {
+                  "properties": {
+                      "privateIPAllocationMethod": "Dynamic",
+                      "subnet": {
+                          "id": "[variables('primarySubnetGatewayRef')]"
+                      },
+                      "publicIPAddress": {
+                          "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('primaryVpnGatewayPublicIPName'))]"
+                      }
+                  },
+                  "name": "vnetGatewayConfigMain"
               }
-            },
-            "name": "vnetGatewayConfigMain"
-          }
-        ],
-        "sku": {
-          "name": "[variables('vpnGwSku')]",
-          "tier": "[variables('vpnGwSku')]"
+          ],
+           "sku": {
+            "name": "[variables('vpnGwSku')]",
+            "tier": "[variables('vpnGwSku')]"
         },
-        "gatewayType": "Vpn",
-        "vpnType": "[variables('vpnType')]",
-        "enableBgp": "false"
+          "gatewayType": "Vpn",
+          "vpnType": "[variables('vpnType')]",
+          "enableBgp": "false"
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworkGateways",
       "name": "[variables('secondaryVpnGatewayName')]",
       "location": "[parameters('secondaryLocation')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('secondaryVpnGatewayPublicIPName'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', variables('secondaryVirtualNetworkName'))]"
+          "[concat('Microsoft.Network/publicIPAddresses/', variables('secondaryVpnGatewayPublicIPName'))]",
+          "[concat('Microsoft.Network/virtualNetworks/', variables('secondaryVirtualNetworkName'))]"
       ],
       "properties": {
-        "ipConfigurations": [
-          {
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[variables('secondarySubnetGatewayRef')]"
-              },
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('secondaryVpnGatewayPublicIPName'))]"
+          "ipConfigurations": [
+              {
+                  "properties": {
+                      "privateIPAllocationMethod": "Dynamic",
+                      "subnet": {
+                          "id": "[variables('secondarySubnetGatewayRef')]"
+                      },
+                      "publicIPAddress": {
+                          "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('secondaryVpnGatewayPublicIPName'))]"
+                      }
+                  },
+                  "name": "vnetGatewayConfigMain"
               }
-            },
-            "name": "vnetGatewayConfigMain"
-          }
+          ],
+           "sku": {
+            "name": "[variables('vpnGwSku')]",
+            "tier": "[variables('vpnGwSku')]"
+        },
+          "gatewayType": "Vpn",
+          "vpnType": "[variables('vpnType')]",
+          "enableBgp": "false"
+      }
+    },
+    {
+        "apiVersion": "[variables('apiVersion')]",
+        "type": "Microsoft.Network/connections",
+        "name": "[variables('primaryVpnGwConnectionName')]",
+        "location": "[parameters('primaryLocation')]",
+        "dependsOn": [
+            "[concat('Microsoft.Network/virtualNetworkGateways/', variables('primaryVpnGatewayName'))]",
+            "[concat('Microsoft.Network/virtualNetworkGateways/', variables('secondaryVpnGatewayName'))]"
         ],
-        "sku": {
-          "name": "[variables('vpnGwSku')]",
-          "tier": "[variables('vpnGwSku')]"
-        },
-        "gatewayType": "Vpn",
-        "vpnType": "[variables('vpnType')]",
-        "enableBgp": "false"
-      }
+        "properties": {
+            "virtualNetworkGateway1": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',variables('primaryVpnGatewayName'))]"
+            },
+            "virtualNetworkGateway2": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',variables('secondaryVpnGatewayName'))]"
+            },
+            "connectionType": "Vnet2Vnet",
+            "routingWeight": 3,
+            "sharedKey": "[parameters('vpnGwSharedKey')]"
+        }
     },
     {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Network/connections",
-      "name": "[variables('primaryVpnGwConnectionName')]",
-      "location": "[parameters('primaryLocation')]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworkGateways/', variables('primaryVpnGatewayName'))]",
-        "[concat('Microsoft.Network/virtualNetworkGateways/', variables('secondaryVpnGatewayName'))]"
-      ],
-      "properties": {
-        "virtualNetworkGateway1": {
-          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',variables('primaryVpnGatewayName'))]"
-        },
-        "virtualNetworkGateway2": {
-          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',variables('secondaryVpnGatewayName'))]"
-        },
-        "connectionType": "Vnet2Vnet",
-        "routingWeight": 3,
-        "sharedKey": "[parameters('vpnGwSharedKey')]"
-      }
+        "apiVersion": "[variables('apiVersion')]",
+        "type": "Microsoft.Network/connections",
+        "name": "[variables('secondaryVpnGwConnectionName')]",
+        "location": "[parameters('secondaryLocation')]",
+        "dependsOn": [
+            "[concat('Microsoft.Network/virtualNetworkGateways/', variables('primaryVpnGatewayName'))]",
+            "[concat('Microsoft.Network/virtualNetworkGateways/', variables('secondaryVpnGatewayName'))]"
+        ],
+        "properties": {
+            "virtualNetworkGateway1": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',variables('secondaryVpnGatewayName'))]"
+            },
+            "virtualNetworkGateway2": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',variables('primaryVpnGatewayName'))]"
+            },
+            "connectionType": "Vnet2Vnet",
+            "routingWeight": 3,
+            "sharedKey": "[parameters('vpnGwSharedKey')]"
+        }
     },
     {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Network/connections",
-      "name": "[variables('secondaryVpnGwConnectionName')]",
-      "location": "[parameters('secondaryLocation')]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworkGateways/', variables('primaryVpnGatewayName'))]",
-        "[concat('Microsoft.Network/virtualNetworkGateways/', variables('secondaryVpnGatewayName'))]"
-      ],
-      "properties": {
-        "virtualNetworkGateway1": {
-          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',variables('secondaryVpnGatewayName'))]"
-        },
-        "virtualNetworkGateway2": {
-          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',variables('primaryVpnGatewayName'))]"
-        },
-        "connectionType": "Vnet2Vnet",
-        "routingWeight": 3,
-        "sharedKey": "[parameters('vpnGwSharedKey')]"
-      }
-    },
-    {
-      "apiVersion": "2015-06-15",
+      "apiversion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('vmName')]",
       "location": "[parameters('primaryLocation')]",
@@ -742,7 +744,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('vmName'),'/initdevbox')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[parameters('primaryLocation')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"

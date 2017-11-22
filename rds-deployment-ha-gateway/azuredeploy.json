@@ -125,7 +125,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[parameters('storageAccountName')]",
       "location": "[resourceGroup().location]",
@@ -134,13 +134,13 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[Parameters('gw-availabilityset')]",
       "location": "[resourceGroup().location]"
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIpRef')]",
       "location": "[resourceGroup().location]",
@@ -152,7 +152,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/loadBalancers",
       "name": "[Parameters('Loadbalancer')]",
       "location": "[resourceGroup().location]",
@@ -175,6 +175,7 @@
             "name": "[parameters('backendAddressPools')]"
           }
         ],
+
         "loadBalancingRules": [
           {
             "name": "LBRule01",
@@ -237,6 +238,7 @@
             }
           }
         ],
+
         "inboundNatRules": [
           {
             "name": "rdp",
@@ -250,14 +252,16 @@
               "enableFloatingIP": false
             }
           }
+
         ]
+
       }
     },
     {
       "name": "[concat('gw-',copyindex(),'-nic')]",
       "type": "Microsoft.Network/networkInterfaces",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2017-06-01",
+      "apiVersion": "[variables('apiversion')]",
       "copy": {
         "name": "gw-nic-loop",
         "count": "[parameters('numberOfWebGwInstances')]"
@@ -266,6 +270,7 @@
         "Microsoft.Network/loadBalancers/loadBalancer"
       ],
       "properties": {
+
         "ipConfigurations": [
           {
             "name": "ipconfig1",
@@ -279,7 +284,7 @@
                   "id": "[concat(resourceId('Microsoft.Network/loadBalancers','loadBalancer'),'/backendAddressPools/',parameters('backendAddressPools'))]"
                 }
               ],
-              "loadBalancerInboundNatRules": []
+              "loadBalancerInboundNatRules": [ ]
             }
           }
         ]
@@ -289,7 +294,7 @@
       "name": "[concat('gw-vm-',copyindex())]",
       "type": "Microsoft.Compute/virtualMachines",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "[variables('apiversion')]",
       "copy": {
         "name": "gw-vm-loop",
         "count": "[parameters('numberOfWebGwInstances')]"
@@ -340,7 +345,7 @@
           "name": "[concat('gw-vm-',copyindex(),'/Gateway')]",
           "type": "Microsoft.Compute/virtualMachines/extensions",
           "location": "[resourceGroup().location]",
-          "apiVersion": "2015-05-01-preview",
+          "apiVersion": "[variables('apiversion')]",
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines', Concat('gw-vm-',copyindex()))]"
           ],
@@ -365,13 +370,14 @@
                 "AdminPassword": "[parameters('adminPassword')]"
               }
             }
+
           }
         },
         {
           "name": "[concat('gw-vm-',copyindex(),'/WebAndGwFarmAdd_PostConfig1.1')]",
           "type": "Microsoft.Compute/virtualMachines/extensions",
           "location": "[resourceGroup().location]",
-          "apiVersion": "2015-05-01-preview",
+          "apiVersion": "[variables('apiversion')]",
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines', Concat('gw-vm-',copyindex()))]",
             "[concat('Microsoft.Compute/virtualMachines/gw-vm-',copyindex(),'/extensions/','Gateway')]"
@@ -382,20 +388,22 @@
             "typeHandlerVersion": "1.8",
             "autoUpgradeMinorVersion": true,
             "settings": {
-              "fileUris": [
-                "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/rds-deployment-ha-gateway/Scripts/WebAndGwFarmAdd_PostConfig1.1.ps1"
-              ]
+              "fileUris": [ "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/rds-deployment-ha-gateway/Scripts/WebAndGwFarmAdd_PostConfig1.1.ps1" ]
+              
             },
             "protectedSettings": {
-              "Items": {
-                "AdminPassword": "[parameters('adminPassword')]"
-              },
+              
+              "Items": { "AdminPassword": "[parameters('adminPassword')]" },
               "storageAccountName": "[parameters('storageaccountname')]",
               "commandToExecute": "[Concat('powershell.exe -ExecutionPolicy Unrestricted -File', ' ', 'WebAndGwFarmAdd_PostConfig1.1.ps1',' ','-username \"',parameters('adminusername'),'\" ', '-password \"',parameters('adminpassword'),'\" ','-BrokerServer \"',parameters('BrokerServer'),'\" ','-WebURL \"',parameters('WebURL'),'\" ','-Domainname \"',parameters('adDomainName'),'\" ','-DomainNetbios \"',parameters('DomainNetbios'),'\" ','-numberofwebServers ',parameters('numberOfWebGwInstances'))]"
             }
+
           }
         }
+
       ]
+
     }
+
   ]
 }

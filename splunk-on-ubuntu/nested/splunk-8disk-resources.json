@@ -58,7 +58,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('resourceAPIVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
       "tags": {
@@ -87,7 +87,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('resourceAPIVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "tags": {
@@ -217,7 +217,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('resourceAPIVersion')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'), '/node-setup')]",
       "location": "[parameters('location')]",
@@ -245,7 +245,7 @@
       "value": "[variables('storageReferenceName')]"
     },
     "storageApiVersion": {
-      "type": "string",
+      "type":"string",
       "value": "[variables('storageApiVersion')]"
     },
     "blobEndpoint": {

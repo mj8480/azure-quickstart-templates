@@ -114,7 +114,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('virtualNetworkName')]",
       "location": "[resourceGroup().location]",
@@ -135,7 +135,13 @@
       }
     },
     {
+<<<<<<< HEAD
       "apiVersion": "2017-06-01",
+||||||| 137cb18... Correcting api version
+      "apiVersion": "2015-06-15",
+=======
+      "apiVersion": "[variables('apiVersion')]",
+>>>>>>> parent of 137cb18... Correcting api version
       "name": "[parameters('applicationGatewayName')]",
       "type": "Microsoft.Network/applicationGateways",
       "location": "[resourceGroup().location]",

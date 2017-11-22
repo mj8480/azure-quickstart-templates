@@ -24,6 +24,26 @@
     "lapVmSize": {
       "type": "string",
       "defaultValue": "Standard_D3",
+<<<<<<< HEAD
+||||||| 137cb18... Correcting api version
+      "allowedValues": [
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_D1",
+        "Standard_D3",
+        "Standard_D4"
+      ],
+=======
+      "allowedValues": [
+	    "Standard_A1",
+		"Standard_A2",
+		"Standard_A3",
+        "Standard_D1",
+        "Standard_D3",
+        "Standard_D4"
+      ],
+>>>>>>> parent of 137cb18... Correcting api version
       "metadata": {
         "description": "The size of the virtual machines used when provisioning the Lap node"
       }
@@ -38,6 +58,26 @@
     "mysqlVmSize": {
       "type": "string",
       "defaultValue": "Standard_D3",
+<<<<<<< HEAD
+||||||| 137cb18... Correcting api version
+      "allowedValues": [
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_D1",
+        "Standard_D3",
+        "Standard_D4"
+      ],
+=======
+      "allowedValues": [
+	    "Standard_A1",
+		"Standard_A2",
+		"Standard_A3",
+        "Standard_D1",
+        "Standard_D3",
+        "Standard_D4"
+      ],
+>>>>>>> parent of 137cb18... Correcting api version
       "metadata": {
         "description": "The size of the virtual machines used when provisioning Mysql node(s)"
       }
@@ -63,6 +103,12 @@
     "lampMysqlTemplateUrl": "[concat(parameters('_artifactsLocation'), '/lampmysql-resources.json', parameters('_artifactsLocationSasToken'))]",
     "virtualNetworkName": "virtualNetwork",
     "namespace": "lamp-",
+<<<<<<< HEAD
+||||||| 137cb18... Correcting api version
+    "apiVersion": "2015-01-01",
+=======
+	"apiVersion": "2015-01-01",
+>>>>>>> parent of 137cb18... Correcting api version
     "networkSettings": {
       "virtualNetworkName": "[variables('virtualNetworkName')]",
       "addressPrefix": "10.0.0.0/16",
@@ -79,7 +125,7 @@
           "start": 5
         },
         "lapip": "10.0.0.240",
-        "mysqlip": "10.0.0.10"
+		"mysqlip": "10.0.0.10"
       }
     },
     "lapOsSettings": {
@@ -109,7 +155,13 @@
     {
       "name": "shared",
       "type": "Microsoft.Resources/deployments",
+<<<<<<< HEAD
       "apiVersion": "2017-05-10",
+||||||| 137cb18... Correcting api version
+      "apiVersion": "2015-01-01",
+=======
+      "apiVersion": "[variables('apiVersion')]",
+>>>>>>> parent of 137cb18... Correcting api version
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -126,7 +178,13 @@
     {
       "name": "lampLapNode",
       "type": "Microsoft.Resources/deployments",
+<<<<<<< HEAD
       "apiVersion": "2017-05-10",
+||||||| 137cb18... Correcting api version
+      "apiVersion": "2015-01-01",
+=======
+      "apiVersion": "[variables('apiVersion')]",
+>>>>>>> parent of 137cb18... Correcting api version
       "dependsOn": [
         "shared"
       ],
@@ -173,7 +231,13 @@
     {
       "name": "[concat('lampMysqlNode', copyindex())]",
       "type": "Microsoft.Resources/deployments",
+<<<<<<< HEAD
       "apiVersion": "2017-05-10",
+||||||| 137cb18... Correcting api version
+      "apiVersion": "2015-01-01",
+=======
+      "apiVersion": "[variables('apiVersion')]",
+>>>>>>> parent of 137cb18... Correcting api version
       "dependsOn": [
         "shared",
         "lampLapNode"
@@ -204,9 +268,9 @@
           "lapNode": {
             "value": "[variables('networkSettings').statics.lapip]"
           },
-          "mysqlstaticIp": {
+		  "mysqlstaticIp": {
             "value": "[variables('networkSettings').statics.mysqlip]"
-          },
+		  },
           "subnet": {
             "value": "[variables('networkSettings').subnet.dse]"
           },

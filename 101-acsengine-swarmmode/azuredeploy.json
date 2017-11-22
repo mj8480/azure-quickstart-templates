@@ -750,7 +750,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersionStorage')]",
       "copy": {
         "count": "[variables('agentStorageAccountsCount')]",
         "name": "vmLoopNode"
@@ -766,7 +766,7 @@
       "type": "Microsoft.Storage/storageAccounts"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "location": "[variables('location')]",
       "name": "[variables('agentIPAddressName')]",
       "properties": {
@@ -778,7 +778,7 @@
       "type": "Microsoft.Network/publicIPAddresses"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('agentIPAddressName'))]"
       ],
@@ -819,7 +819,7 @@
               "probe": {
                 "id": "[concat(variables('agentLbID'),'/probes/tcp80Probe')]"
               },
-              "protocol": "Tcp"
+              "protocol": "tcp"
             }
           },
           {
@@ -839,7 +839,7 @@
               "probe": {
                 "id": "[concat(variables('agentLbID'),'/probes/tcp443Probe')]"
               },
-              "protocol": "Tcp"
+              "protocol": "tcp"
             }
           },
           {
@@ -859,7 +859,7 @@
               "probe": {
                 "id": "[concat(variables('agentLbID'),'/probes/tcp8080Probe')]"
               },
-              "protocol": "Tcp"
+              "protocol": "tcp"
             }
           }
         ],
@@ -867,28 +867,28 @@
           {
             "name": "tcp80Probe",
             "properties": {
-              "intervalInSeconds": 5,
-              "numberOfProbes": 2,
+              "intervalInSeconds": "5",
+              "numberOfProbes": "2",
               "port": 80,
-              "protocol": "Tcp"
+              "protocol": "tcp"
             }
           },
           {
             "name": "tcp443Probe",
             "properties": {
-              "intervalInSeconds": 5,
-              "numberOfProbes": 2,
+              "intervalInSeconds": "5",
+              "numberOfProbes": "2",
               "port": 443,
-              "protocol": "Tcp"
+              "protocol": "tcp"
             }
           },
           {
             "name": "tcp8080Probe",
             "properties": {
-              "intervalInSeconds": 5,
-              "numberOfProbes": 2,
+              "intervalInSeconds": "5",
+              "numberOfProbes": "2",
               "port": 8080,
-              "protocol": "Tcp"
+              "protocol": "tcp"
             }
           }
         ]
@@ -896,7 +896,7 @@
       "type": "Microsoft.Network/loadBalancers"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('masterPublicIPAddressName'))]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountPrefixes')[mod(add(0,variables('agentStorageAccountOffset')),variables('storageAccountPrefixesCount'))],variables('storageAccountPrefixes')[div(add(0,variables('agentStorageAccountOffset')),variables('storageAccountPrefixesCount'))],variables('agentAccountName'))]",
@@ -988,7 +988,7 @@
       "type": "Microsoft.Compute/virtualMachineScaleSets"
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersionStorage')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('masterPublicIPAddressName'))]"
       ],
@@ -1000,7 +1000,7 @@
       "type": "Microsoft.Storage/storageAccounts"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "location": "[variables('location')]",
       "name": "[variables('virtualNetworkName')]",
       "properties": {
@@ -1028,14 +1028,14 @@
       "type": "Microsoft.Network/virtualNetworks"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "location": "[variables('location')]",
       "name": "[variables('masterAvailabilitySet')]",
       "properties": {},
       "type": "Microsoft.Compute/availabilitySets"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "location": "[variables('location')]",
       "name": "[variables('masterPublicIPAddressName')]",
       "properties": {
@@ -1047,7 +1047,7 @@
       "type": "Microsoft.Network/publicIPAddresses"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('masterPublicIPAddressName'))]"
       ],
@@ -1073,7 +1073,7 @@
       "type": "Microsoft.Network/loadBalancers"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "copy": {
         "count": "[variables('masterCount')]",
         "name": "masterLbLoopNode"
@@ -1095,7 +1095,7 @@
       "type": "Microsoft.Network/loadBalancers/inboundNatRules"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "dependsOn": [
         "[variables('masterLbID')]"
       ],
@@ -1113,7 +1113,7 @@
       "type": "Microsoft.Network/loadBalancers/inboundNatRules"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "copy": {
         "count": "[variables('masterCount')]",
         "name": "nicLoopNode"
@@ -1149,7 +1149,7 @@
       "type": "Microsoft.Network/networkInterfaces"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "copy": {
         "count": "[variables('masterCount')]",
         "name": "vmLoopNode"
@@ -1214,7 +1214,7 @@
       "type": "Microsoft.Compute/virtualMachines"
     },
     {
-      "apiVersion": "2016-03-30",
+      "apiVersion": "[variables('apiVersionDefault')]",
       "copy": {
         "count": "[variables('masterCount')]",
         "name": "vmLoopNode"

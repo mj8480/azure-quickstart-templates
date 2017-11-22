@@ -34,7 +34,7 @@
     },
     "resources": [
         {
-            "apiVersion": "2017-06-01",
+            "apiversion": "2017-06-01",
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[variables('storageAccountName')]",
             "location": "[resourceGroup().location]",

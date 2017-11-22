@@ -32,39 +32,40 @@
     "vmSize": "Standard_D1",
     "clusterName": "elasticcluster",
     "logTableName": "elasticscriptlog",
-    "imagePublisher": "OpenLogic",
-    "imageOffer": "CentOS",
-    "imageSku": "7.1",
+    "imagePublisher" : "OpenLogic",
+    "imageOffer" : "CentOS",
+    "imageSku" : "7.1",
     "availabilitySetName": "[concat(parameters('VMPrefix'), 'AvSet')]",
-    "storageName": "[toLower(concat(parameters('commonPrefix'), uniqueString(resourceGroup().id)))]",
+    "storageName" : "[toLower(concat(parameters('commonPrefix'), uniqueString(resourceGroup().id)))]",
     "storageAccountType": "Standard_LRS",
     "dataDiskSize": "1023",
-    "virtualNetworkName": "[concat(parameters('commonPrefix'), 'VNet')]",
+    "virtualNetworkName":  "[concat(parameters('commonPrefix'), 'VNet')]" ,
     "publicIPAddressName": "JumpboxIP",
     "publicIPAddressType": "Dynamic",
     "JBNSGName": "JumpboxNSG",
     "subnetName": "elasticSubnet",
-    "subnetAdmin": "adminSubnet",
+	  "subnetAdmin": "adminSubnet",
     "networkInterfaceName": "NIC",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetName'))]",
-    "subnetAdminRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetAdmin'))]",
+	  "subnetAdminRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetAdmin'))]",
     "numberOfNodes": 3,
     "scriptBaseUrl": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/elasticsearch-centos-3node/",
     "elasticScript": "elasticinstall.py",
-    "jumpboxScript": "prep-jumpbox.ps1",
+    "jumpboxScript" : "prep-jumpbox.ps1",
     "installScripts": [
-      "[concat(variables('scriptBaseUrl'), variables('elasticScript'))]",
-      "[concat(variables('scriptBaseUrl'), 'sdc.layout')]"
+        "[concat(variables('scriptBaseUrl'), variables('elasticScript'))]",
+        "[concat(variables('scriptBaseUrl'), 'sdc.layout')]"
     ],
     "jumpboxScripts": [
-      "[concat(variables('scriptBaseUrl'), variables('jumpboxScript'))]",
-      "[concat(variables('scriptBaseUrl'), 'get-started.ps1')]"
+        "[concat(variables('scriptBaseUrl'), variables('jumpboxScript'))]",
+        "[concat(variables('scriptBaseUrl'), 'get-started.ps1')]"
     ]
+    
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageName')]",
       "location": "[resourceGroup().location]",
@@ -76,7 +77,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
       "location": "[resourceGroup().location]",
@@ -85,7 +86,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetName')]",
       "location": "[resourceGroup().location]",
@@ -94,7 +95,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[variables('JBNSGName')]",
       "location": "[resourceGroup().location]",
@@ -118,7 +119,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[resourceGroup().location]",
@@ -153,8 +154,9 @@
         ]
       }
     },
+
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(parameters('vmPrefix'), variables('networkInterfaceName'), copyindex())]",
       "location": "[resourceGroup().location]",
@@ -184,7 +186,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('vmPrefix'), copyindex())]",
       "copy": {
@@ -252,7 +254,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('vmPrefix'), copyindex(), '/installelasticsearch')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "copy": {
         "name": "virtualMachineExtensions",
         "count": "[variables('numberOfNodes')]"
@@ -273,7 +275,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "JumpboxNic",
       "location": "[resourceGroup().location]",
@@ -303,7 +305,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "Jumpbox",
       "location": "[resourceGroup().location]",
@@ -351,7 +353,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "Jumpbox/PrepExtension",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "[variables('apiVersion')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "Microsoft.Compute/virtualMachines/Jumpbox"
