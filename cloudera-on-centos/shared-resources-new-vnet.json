@@ -2,9 +2,6 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.1",
   "parameters": {
-    "resourceAPIVersion":{
-      "type":"string"
-    },
     "networkSpec": {
       "type": "object"
     },
@@ -21,21 +18,21 @@
   },
   "resources": [
     {
-      "apiVersion": "[parameters('resourceAPIVersion')]",
+      "apiVersion": "[variables('resourceAPIVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[parameters('masterNodeASName')]",
       "location": "[resourceGroup().location]",
       "properties": { }
     },
     {
-      "apiVersion": "[parameters('resourceAPIVersion')]",
+      "apiVersion": "[variables('resourceAPIVersion')]",
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[parameters('dataNodeASName')]",
       "location": "[resourceGroup().location]",
       "properties": { }
     },
     {
-      "apiVersion": "[parameters('resourceAPIVersion')]",
+      "apiVersion": "[variables('resourceAPIVersion')]",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[concat(parameters('networkSpec').virtualNetworkName, '-sg')]",
       "location": "[resourceGroup().location]",
@@ -59,7 +56,7 @@
       }
     },
     {
-      "apiVersion": "[parameters('resourceAPIVersion')]",
+      "apiVersion": "[variables('resourceAPIVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('networkSpec').virtualNetworkName]",
       "dependsOn": [

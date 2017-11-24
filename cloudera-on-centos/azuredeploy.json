@@ -332,9 +332,6 @@
           "contentVersion": "1.0.0.1"
         },
         "parameters": {
-          "resourceAPIVersion":{
-            "value":"[variables('resourceAPIVersion')]"
-          },
           "networkSpec": {
             "value": "[variables('networkSpec')]"
           },
@@ -363,9 +360,6 @@
         "parameters": {
           "vnetID":{
             "value":"[variables('VNetId')]"
-          },
-          "resourceAPIVersion":{
-            "value":"[variables('resourceAPIVersion')]"
           },
           "dnsNamePrefix": {
             "value": "[parameters('dnsNamePrefix')]"
@@ -408,12 +402,6 @@
           "vnetID":{
             "value":"[variables('VNetId')]"
           },
-          "templateAPIVersion":{
-            "value":"[variables('templateAPIVersion')]"
-          },
-          "resourceAPIVersion":{
-            "value":"[variables('resourceAPIVersion')]"
-          },
           "dnsNamePrefix": {
             "value": "[parameters('dnsNamePrefix')]"
           },
@@ -453,9 +441,6 @@
           "contentVersion": "1.0.0.1"
         },
         "parameters": {
-          "resourceAPIVersion":{
-            "value":"[variables('resourceAPIVersion')]"
-          },
           "dnsNamePrefix": {
             "value": "[parameters('dnsNamePrefix')]"
           },

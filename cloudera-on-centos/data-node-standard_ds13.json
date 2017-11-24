@@ -5,12 +5,6 @@
     "vnetID": {
       "type":"string"
     },
-    "templateAPIVersion": {
-      "type":"string"
-    },
-    "resourceAPIVersion":{
-      "type":"string"
-    },
     "dnsNamePrefix": {
       "type": "string"
     },
@@ -42,7 +36,7 @@
     {
       "name": "vm-with-datadisks",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "[parameters('templateAPIVersion')]",
+      "apiVersion": "[variables('templateAPIVersion')]",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -52,9 +46,6 @@
         "parameters": {
           "vnetID": {
             "value":"[parameters('vnetID')]"
-          },
-          "resourceAPIVersion":{
-            "value":"[parameters('resourceAPIVersion')]"
           },
           "dnsNamePrefix": {
             "value":"[parameters('dnsNamePrefix')]"
