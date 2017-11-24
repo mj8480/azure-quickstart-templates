@@ -134,9 +134,9 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_DS14",
+      "defaultValue": "Standard_DS13",
       "metadata": {
-        "description": "The size of the VMs deployed in the cluster (defaults to Standard_DS14)"
+        "description": "The size of the VMs deployed in the cluster (defaults to Standard_DS13)"
       },
       "allowedValues": ["Standard_DS14", "Standard_DS13", "Standard_DS14_V2", "Standard_DS13_V2"]
     },
@@ -289,15 +289,6 @@
           "sku": "6_8",
           "version": "latest"
         }
-      },
-      "ClouderaCentOS6_7Germany": {
-        "plan": null,
-        "imageReference": {
-          "publisher": "cloudera",
-          "offer": "cloudera-centos-os",
-          "sku": "6_7",
-          "version": "latest"
-        }
       }
     },
     "vmSpec": {
@@ -330,10 +321,13 @@
     {
       "name": "shared-resources",
       "type": "Microsoft.Resources/deployments",
+      //    "templateAPIVersion":"2015-11-01",
+      //    "resourceAPIVersion":"2015-06-15",
       "apiVersion": "[variables('templateAPIVersion')]",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
+          // "share-resourcesUri": "../shared-resources-new-vnet.json"
           "uri": "[variables('share-resourcesUri')]",
           "contentVersion": "1.0.0.1"
         },

@@ -55,6 +55,8 @@
     }
   },
   "variables": {
+    "templateAPIVersion":"2015-11-01",
+    "resourceAPIVersion":"2015-06-15",
     "singleQuote": "'",
     "masterIP":"[parameters('networkSpec').masterIP]",
     "workerIP":"[parameters('networkSpec').workerIP]"

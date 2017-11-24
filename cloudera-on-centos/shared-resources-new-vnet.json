@@ -15,7 +15,10 @@
       "type": "string"
     }
   },
-  "variables": {},
+  "variables": {
+    "templateAPIVersion":"2015-11-01",
+    "resourceAPIVersion":"2015-06-15"
+  },
   "resources": [
     {
       "apiVersion": "[parameters('resourceAPIVersion')]",
