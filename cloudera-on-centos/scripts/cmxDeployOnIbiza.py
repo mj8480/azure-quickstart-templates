@@ -1900,9 +1900,9 @@ def main():
 
     log("setup_management")
     # Example CM API to setup Cloudera Manager Management services - not installing 'ACTIVITYMONITOR'
-    mgmt_roles = ['SERVICEMONITOR', 'ALERTPUBLISHER', 'EVENTSERVER', 'HOSTMONITOR']
-    if management.licensed():
-        mgmt_roles.append('REPORTSMANAGER')
+    mgmt_roles = ['SERVICEMONITOR', 'HOSTMONITOR'] #'ALERTPUBLISHER', 'EVENTSERVER', 
+    #if management.licensed():
+    #    mgmt_roles.append('REPORTSMANAGER')
     management(*mgmt_roles).setup()
     # "START" Management roles
     management(*mgmt_roles).start()
@@ -1919,14 +1919,14 @@ def main():
     # Zookeeper, hdfs, HBase, Solr, Spark, Yarn,
     # Hive, Sqoop, Sqoop Client, Impala, Oozie, Hue
     log("setup_components")
-    setup_zookeeper(options.highAvailability)
+    #setup_zookeeper(options.highAvailability)
     setup_hdfs(options.highAvailability)
-    setup_yarn(options.highAvailability)
-    setup_spark_on_yarn()
+    #setup_yarn(options.highAvailability)
+    #setup_spark_on_yarn()
     setup_hive()
     setup_impala(options.highAvailability)
-    setup_oozie()
-    setup_hue()
+    #setup_oozie()
+    #setup_hue()
 
     #setup_mapreduce(options.highAvailability)
 

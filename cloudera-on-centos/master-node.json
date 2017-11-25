@@ -184,7 +184,9 @@
                 "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', uniquestring(concat(copyIndex(), 'mn', resourceGroup().id)), variables('storageAccountName')), '2015-06-15').primaryEndpoints.blob, uniquestring(concat(copyIndex(), 'mn', resourceGroup().id)), '/', variables('vmName'), '-datadisk1.vhd')]"
               },
               "createOption": "Empty"
-            },
+            }
+            /*
+            ,
             {
               "name": "datadisk2",
               "diskSizeGB": "512",
@@ -203,6 +205,7 @@
               },
               "createOption": "Empty"
             }
+            */
           ]
         },
         "networkProfile": {
