@@ -27,56 +27,6 @@ log() {
 cat > inputs2.sh << 'END'
 
 
-
-mountDriveForLogCloudera()
-{
-  dirname=/log
-  drivename=$1
-  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir $dirname
-  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
-  UUID=`sudo lsblk -no UUID $drivename`
-  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
-  mkdir /log/cloudera
-  ln -s /log/cloudera /opt/cloudera
-}
-
-mountDriveForZookeeper()
-{
-  dirname=/log/cloudera/zookeeper
-  drivename=$1
-  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir $dirname
-  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
-  UUID=`sudo lsblk -no UUID $drivename`
-  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
-}
-
-
-
-mountDriveForQJN()
-{
-  dirname=/data/dfs/
-  drivename=$1
-  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir /data
-  mkdir $dirname
-  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
-  UUID=`sudo lsblk -no UUID $drivename`
-  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
-}
-
-mountDriveForPostgres()
-{
-  dirname=/var/lib/pgsql
-  drivename=$1
-  mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 $drivename
-  mkdir $dirname
-  mount -o noatime,barrier=1 -t ext4 $drivename $dirname
-  UUID=`sudo lsblk -no UUID $drivename`
-  echo "UUID=$UUID   $dirname    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
-}
-
 prepare_unmounted_volumes()
 {
   # Each line contains an entry like /dev/<device name>
@@ -94,16 +44,7 @@ prepare_unmounted_volumes()
     # mounted), and is not contained in $MOUNTED_VOLUMES
     if [[ ! ${part} =~ [0-9]$ && ! ${ALL_PARTITIONS} =~ $part[0-9] && $MOUNTED_VOLUMES != *$part* ]];then
       echo ${part}
-      if [[ ${COUNTER} == 0 ]]; then
-        mountDriveForLogCloudera "/dev/$part"
-      elif [[ ${COUNTER} == 1 ]]; then
-        mountDriveForZookeeper "/dev/$part"
-      elif [[ ${COUNTER} == 2 ]]; then
-        mountDriveForQJN "/dev/$part"
-      elif [[ ${COUNTER} == 3 ]]; then
-        mountDriveForPostgres "/dev/$part"
-      else prepare_disk "/data$COUNTER" "/dev/$part"
-      fi
+      prepare_disk "/data$COUNTER" "/dev/$part"
       COUNTER=$(($COUNTER+1))
     fi
   done
