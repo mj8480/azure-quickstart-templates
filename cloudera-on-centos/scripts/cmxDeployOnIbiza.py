@@ -358,9 +358,6 @@ def setup_yarn():
             yarn_dir_list+=",/data%d/yarn/nm" % (x)
 
         cmhost= management.get_cmhost()
-        rm_host_id = [host for host in hosts if host.id == 0][0]
-        srm_host_id = [host for host in hosts if host.id == 1][0]
-
         rm_host_id=cmhost
         srm_host_id=cmhost
 
