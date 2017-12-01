@@ -23,7 +23,8 @@ from cm_api.endpoints.services import ApiServiceSetupInfo, ApiService
 #LOG_DIR='/var/log/cloudera'
 
 def getParameterValue(vmsize, parameter):
-    log("vmsize: "+vmsize+", parameter:"+parameter)
+    #log("vmsize: "+vmsize+", parameter:"+parameter)
+    vmsize = "Standard_DS13"
     switcher = {
         "Standard_DS14:yarn_nodemanager_resource_cpu_vcores": "10",
         "Standard_DS14:yarn_nodemanager_resource_memory_mb": "45056",
@@ -1389,9 +1390,9 @@ def main():
     global diskcount
     diskcount= getDataDiskCount()
     log("data_disk_count"+`diskcount`)
-    if(cmx.do_post):
-        postEulaInfo(cmx.fname, cmx.lname, cmx.email, cmx.company,
-                     cmx.jobrole, cmx.jobfunction, cmx.phone)
+    #if(cmx.do_post):
+    #    postEulaInfo(cmx.fname, cmx.lname, cmx.email, cmx.company,
+    #                 cmx.jobrole, cmx.jobfunction, cmx.phone)
     # Prepare Cloudera Manager Server:
     # 1. Initialise Cluster and set Cluster name: 'Cluster 1'
     # 3. Add hosts into: 'Cluster 1'
