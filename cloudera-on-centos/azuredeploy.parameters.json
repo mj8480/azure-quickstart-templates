@@ -1,51 +1,75 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.1",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
   "parameters": {
-    "storageAccountSuffix": {
-      "value": "GEN-UNIQUE-10"
+    "adminUsername": {
+      "value": "mj"
     },
     "adminPassword": {
-      "value": "GEN-PASSWORD"
+      "value": "Foo8bar"
+    },
+    "cmUsername": {
+      "value": "mj"
     },
     "cmPassword": {
-      "value": "GEN-PASSWORD"
+      "value": "Foo8bar"
     },
-    "numberOfDataNodes": {
-      "value": 3
+    "storageAccountSuffix": {
+      "value": "mjstorage"
     },
     "dnsNamePrefix": {
-      "value": "GEN-UNIQUE-10"
+      "value": "mj180"
     },
     "masterStorageAccountType": {
-      "value": "Premium_LRS"
+      "value": "Standard_LRS"
     },
     "workerStorageAccountType": {
       "value": "Standard_LRS"
     },
     "virtualNetworkName": {
-      "value": "GEN-UNIQUE-10"
+      "value": "mjvnet"
+    },
+    "vnetNewOrExisting": {
+      "value": "new"
+    },
+    "virtualNetworkRGName": {
+      "value": "mjrg"
     },
     "subnetName": {
-      "value": "GEN-UNIQUE-10"
+      "value": "mjsubnet"
+    },
+    "addressPrefix": {
+      "value": "10.3.0.0/16"
+    },
+    "subnetPrefix": {
+      "value": "10.3.0.0/16"
+    },
+    "masterNodeIPAddress": {
+      "value": "10.3.0.4"
+    },
+    "dataNodeIPOffSetFromMaster": {
+      "value": 5
     },
     "tshirtSize": {
       "value": "Eval"
     },
+    "numberOfDataNodes": {
+      "value": 1
+    },
     "vmSize": {
-      "value": "Standard_DS14"
+      "value": "Standard_D2_v3"
     },
     "vmImage": {
       "value": "ClouderaCentOS6_7"
     },
     "company": {
-      "value": "company"
+      "value": "Company"
     },
     "emailAddress": {
       "value": "email@yourcompany.com"
     },
     "businessPhone": {
-      "value": "123456789"
+      "value": "2123456789"
     },
     "firstName": {
       "value": "FirstName"
@@ -57,7 +81,7 @@
       "value": "Administrator"
     },
     "jobFunction": {
-      "value": "Storage"
+      "value": "Analytics / Business Intelligence"
     }
   }
 }
